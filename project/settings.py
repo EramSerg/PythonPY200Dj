@@ -38,7 +38,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'social_django',
 ]
+
+AUTHENTICATION_BACKENDS = (
+   'social_core.backends.github.GithubOAuth2',
+   'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_REDIRECT_URL = '/profile/' # Чтобы после авторизации перенаправлялось на страницу пользователя
+
+SOCIAL_AUTH_GITHUB_KEY = 'ad58e004cc72a6a56397'
+SOCIAL_AUTH_GITHUB_SECRET = 'e3d60d6248c630d918f044a886ca5edc41f07137'
+SOCIAL_AUTH_GITHUB_SCOPE = ['user:email', 'read:user']
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
