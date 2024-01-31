@@ -15,6 +15,25 @@ class TemplateForm(forms.Form):
     my_textarea = forms.CharField(widget=forms.Textarea)
 
     # TODO Опишите поля (поле для email, пароля, даты, целого числа, переключателя) и их параметры для вашего шаблона формы
+    user_name = forms.CharField(max_length=15)
+    user_email = forms.EmailField()
+    user_password = forms.CharField(widget=forms.PasswordInput)
+    input_date = forms.CharField(widget=forms.DateInput)
+    input_int = forms.CharField(widget=forms.IntegerField)
+    checkbox = forms.CharField(widget=forms.CheckboxInput)
+
+
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(widget=forms.EmailInput)
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+            if hasattr(self, "save_m2m"):
+                self.save_m2m()
+        return user
 
 
 """
